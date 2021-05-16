@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Task = require("../models/task-model");
 const User = require('../models/user-model');
+const fileUpload = require('../configs/cloudinary');
 
 //Get all Tasks
 router.get("/tasks", async (req, res) => {
@@ -53,10 +54,6 @@ router.get('/tasks/:id', async (req,res ) => {
   }
 })
 
-// router.get('/weather', async(req, res) => {
-//   const weather = new Weather({
-//     appID: process.env.WEATHER_KEY
-// });
 
 //Update Task
 router.put('/tasks/:id', async (req, res) => {
@@ -64,6 +61,14 @@ router.put('/tasks/:id', async (req, res) => {
   const {title} = req.body;
   await Task.findByIdAndUpdate(req.params.id, { title})
   res.status(200).json(`Task with id ${req.params.id} was updated.`);
+  } catch(e) {
+    res.status(500).json(`error occurred ${e}`);
+  }
+});
+
+router.post('/upload', fileUpload.single('image'), (req, res) => {
+  try{
+  res.status(200).json({fileUrl: req.file.path});
   } catch(e) {
     res.status(500).json(`error occurred ${e}`);
   }
