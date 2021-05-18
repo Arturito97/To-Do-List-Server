@@ -8,7 +8,7 @@ const fileUpload = require('../configs/cloudinary');
 router.get("/tasks", async (req, res) => {
   try {
     
-    const allTasks = await Task.find();
+    const allTasks = await Task.find().sort({"order": 1});
     res.status(200).json(allTasks);
     
   } catch (e) {
@@ -58,8 +58,8 @@ router.get('/tasks/:id', async (req,res ) => {
 //Update Task
 router.put('/tasks/:id', async (req, res) => {
   try{
-  const {title} = req.body;
-  await Task.findByIdAndUpdate(req.params.id, { title})
+  const {title, order} = req.body;
+  await Task.findByIdAndUpdate(req.params.id, { title, order })
   res.status(200).json(`Task with id ${req.params.id} was updated.`);
   } catch(e) {
     res.status(500).json(`error occurred ${e}`);

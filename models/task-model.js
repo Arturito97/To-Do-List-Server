@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
   title: String,
+  order: Number
 });
 
 const Task = mongoose.model("Task", taskSchema);
