@@ -6,9 +6,10 @@ const fileUpload = require('../configs/cloudinary');
 
 //Get all Tasks
 router.get("/tasks", async (req, res) => {
+  const completed = req.query.completed;
   try {
     
-    const allTasks = await Task.find().sort({"order": 1});
+    const allTasks = await Task.find({ completed: completed }).sort({"order": 1});
     res.status(200).json(allTasks);
     
   } catch (e) {
@@ -18,7 +19,7 @@ router.get("/tasks", async (req, res) => {
 
 //Create Task
 router.post("/tasks", async (req, res) => {
-  const { title } = req.body;
+  const { title, order } = req.body;
   if (!title) {
     res.status(400).json("missing fields");
     return;
@@ -26,7 +27,8 @@ router.post("/tasks", async (req, res) => {
 
   try {
     const response = await Task.create({
-      title
+      title,
+      order
     });
     res.status(200).json(response);
   } catch (e) {
