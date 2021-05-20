@@ -47,10 +47,10 @@ app.use(session({
   saveUninitialized: true,
   resave: false,
   cookie: {
-    sameSite: 'none', //true //the client is on the same domain as the server
+    sameSite: 'none', //true, //the client is on the same domain as the server
     secure: true, //false, //not using https
-    httpOnly: false, //true, //not using https (only http)
-    maxAge: 600000 //expiration time in milliseconds
+    httpOnly: false, //ftrue, //not using https (only http)
+    maxAge: 60000000000000 //expiration time in milliseconds
   },
   rolling: true //session gets refreshed with interactions
 }))

@@ -79,6 +79,7 @@ router.post('/login', (req, res, next) => {
 router.post('/logout', (req, res) => {
   req.logout();
   res.status(200).json('logout success');
+  res.redirect('/');
 });
 
 //LoggedIn
